@@ -1,13 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './App.css';
 
 function App() {
-  const [data, setData] = useState([
-    { title: "WebSite", url: "https://github.com/nsevindi87" },
-    { title: "Udemy Profile", url: "https://udemy.com/nsevindi87" },
-    { title: "Facebook Profile", url: "https://facebook.com/nsevindi87" },
-    { title: "Instagram Profile", url: "https://instagram.com/nsevindi87" },
-  ]);
+  const [data, setData] = useState([]);
 
   const [form, setForm] = useState({
     title: '',
@@ -16,13 +11,14 @@ function App() {
 
   const saveItem = ()=>{
     if(form.title == '' || form.url == '') { alert('Please fill in the blanks'); return; }
-    setData([        
-      ...data,
-      {
-        title:form.title,
-        url:form.url
-      }
-    ]);
+    data.push({
+      title:form.title,
+      url:form.url
+      //veya sadece ...form yazilarak veri akisi saglanabilir.
+    })
+
+    localStorage.setItem('data',JSON.stringify(data));
+
     setForm({
       title:'',
       url:''
@@ -31,7 +27,19 @@ function App() {
 
   //App ilk basladiginda useEffect calisacak
 
+
+  useEffect(()=>{
+    getItem();
+  },[]);
+
   const getItem = ()=>{
+    const localData = localStorage.getItem('data') ?? [];
+    setData(JSON.parse(localData));
+  }
+
+
+// SILME ISLEMI
+  const removeItem = () =>{
 
   }
 
@@ -40,6 +48,9 @@ function App() {
 //! 3- Onclick ile saveItem foksiyonu calistiriliyor.
  // 4- Güncellenen form state sonrasinda setData ile data state güncellenir.
 //! 5- setForm ile input bölümleri silinir. Value={form.title} da burada input iceriginin silinmesini saglar.
+// 6-State ici bosaltildi ve useEffect olusturuldu. App ilk basladiginda useEffect calistirilacak.
+//! 7- getItem ile localStorage den data cekecek.
+// 8- JSON.parse ile string olarak gelen veriyi JSON a ceviriyoruz.
 
   return (
     <div className="App">
@@ -61,3 +72,9 @@ function App() {
 }
 
 export default App;
+
+
+    /* { title: "WebSite", url: "https://github.com/nsevindi87" },
+    { title: "Udemy Profile", url: "https://udemy.com/nsevindi87" },
+    { title: "Facebook Profile", url: "https://facebook.com/nsevindi87" },
+    { title: "Instagram Profile", url: "https://instagram.com/nsevindi87" }, */
