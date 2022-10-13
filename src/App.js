@@ -26,8 +26,6 @@ function App() {
   };
 
   //App ilk basladiginda useEffect calisacak
-
-
   useEffect(()=>{
     getItem();
   },[]);
@@ -39,8 +37,7 @@ function App() {
     //setData(JSON.isArray(localData) ? [] : JSON.parse(localData));
   }
 
-
-// SILME ISLEMI
+// SILME ISLEMI------------------------------------------------------
   const removeItem = (item, index) =>{
     //const xData = data.findIndex((xItem)=>xItem.url == item.url);
     data.splice(index,1);
@@ -77,9 +74,7 @@ function App() {
     </div>
   );
 }
-
 export default App;
-
 
     /* { title: "WebSite", url: "https://github.com/nsevindi87" },
     { title: "Udemy Profile", url: "https://udemy.com/nsevindi87" },
