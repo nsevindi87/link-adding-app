@@ -34,13 +34,18 @@ function App() {
 
   const getItem = ()=>{
     const localData = localStorage.getItem('data') ?? [];
+    
     setData(JSON.parse(localData));
+    //setData(JSON.isArray(localData) ? [] : JSON.parse(localData));
   }
 
 
 // SILME ISLEMI
-  const removeItem = () =>{
-
+  const removeItem = (item, index) =>{
+    //const xData = data.findIndex((xItem)=>xItem.url == item.url);
+    data.splice(index,1);
+    localStorage.setItem('data',JSON.stringify(data));
+    setData([...data]);
   }
 
 //! 1-öncelikle state de yer alan verileri map ile tek tek yazdiriyoruz.
@@ -51,19 +56,21 @@ function App() {
 // 6-State ici bosaltildi ve useEffect olusturuldu. App ilk basladiginda useEffect calistirilacak.
 //! 7- getItem ile localStorage den data cekecek.
 // 8- JSON.parse ile string olarak gelen veriyi JSON a ceviriyoruz.
+//! 9-removeItem ile data silinir.
 
   return (
     <div className="App">
       <div className="inputs">
         <input onChange={(event) =>setForm({...form, title:event.target.value})} value={form.title} className="input" placeholder="Baglanti Basligi" /> 
         <input onChange={(event) =>setForm({...form, url:event.target.value})} value={form.url} className="input" placeholder="Baglanti Adresi" />
-        <button onClick={saveItem} className="button">Ekle</button>       
+        <button onClick={saveItem} className="button">Ekle</button>     
       </div>
       
       <div>
-        {data.map((item) => (                         
+        {data.map((item, index) => (                         
           <div className="content-item">
             <a target="_blank" href={item.url}>{item.title}</a>
+            <button className="removeItem" onClick={()=> removeItem(item, index)}>X</button>  
           </div>
         ))}
       </div>
