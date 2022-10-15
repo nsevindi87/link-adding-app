@@ -33,7 +33,7 @@ function App() {
   const getItem = ()=>{
     const localData = localStorage.getItem('data') ?? [];
     
-    setData(JSON.parse(localData));
+    setData(Array.isArray(localData) ? [] : JSON.parse(localData));
     //setData(JSON.isArray(localData) ? [] : JSON.parse(localData));
   }
 
@@ -75,8 +75,3 @@ function App() {
   );
 }
 export default App;
-
-    /* { title: "WebSite", url: "https://github.com/nsevindi87" },
-    { title: "Udemy Profile", url: "https://udemy.com/nsevindi87" },
-    { title: "Facebook Profile", url: "https://facebook.com/nsevindi87" },
-    { title: "Instagram Profile", url: "https://instagram.com/nsevindi87" }, */
